@@ -257,6 +257,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <button class="pt teal" id="st-pre" onclick="setScoutTab('pre')"><span class="mode-dot dot-teal"></span>Pre-event</button>
     <button class="pt" id="st-qual" onclick="setScoutTab('qual')"><span class="mode-dot dot-dim"></span>Qualification</button>
   </div>
+  <div id="mode-banner" style="border-radius:10px;padding:12px 14px;margin-bottom:12px;display:flex;align-items:flex-start;gap:10px;">
+    <div id="mode-icon" style="font-size:20px;flex-shrink:0;margin-top:1px"></div>
+    <div>
+      <div id="mode-title" style="font-size:16px;font-weight:700;letter-spacing:0.01em;margin-bottom:2px"></div>
+      <div id="mode-desc" style="font-size:12px;line-height:1.5;opacity:0.85"></div>
+    </div>
+  </div>
   <div id="scout-label" style="font-size:11px;color:var(--text2);margin-bottom:10px">Fields marked <span style="color:var(--red)">*</span> are required.</div>
   <div id="scout-form-container"></div>
   <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:6px;">
@@ -673,7 +680,32 @@ function setScoutTab(t){
   currentScoutTab=t;
   document.getElementById('st-pre').className='pt'+(t==='pre'?' teal':'');
   document.getElementById('st-qual').className='pt'+(t==='qual'?' active':'');
+  updateModeBanner(t);
   buildForm();
+}
+
+function updateModeBanner(t){
+  const banner=document.getElementById('mode-banner');
+  const icon=document.getElementById('mode-icon');
+  const title=document.getElementById('mode-title');
+  const desc=document.getElementById('mode-desc');
+  if(t==='pre'){
+    banner.style.background='var(--green-bg)';
+    banner.style.border='1px solid #1a4030';
+    icon.textContent='🔍';
+    title.style.color='var(--green)';
+    title.textContent='Pre-Event Scouting';
+    desc.style.color='var(--green)';
+    desc.textContent='Scout robots before matches begin. Focus on robot capabilities, design, and strategy observed in the pits or practice matches.';
+  } else {
+    banner.style.background='var(--teal-faint)';
+    banner.style.border='1px solid var(--teal-dark)';
+    icon.textContent='🏁';
+    title.style.color='var(--teal)';
+    title.textContent='Qualification Scouting';
+    desc.style.color='var(--teal)';
+    desc.textContent='Scout robots during official matches. Record live performance data — scoring, driving, defense, and endgame — as it happens.';
+  }
 }
 
 /* ===== TOGGLE / COUNTER / STAR ===== */
@@ -1112,6 +1144,7 @@ function renderSettingsMC(){
 
 /* ===== INIT ===== */
 buildForm();
+updateModeBanner('pre');
 renderSettingsMC();
 </script>
 </body>
